@@ -1,0 +1,94 @@
+<odoo>
+    <data>
+        <record id="api_key_add" model="ir.ui.view">
+            <field name="name">API Key</field>
+            <field name="model">res.company</field>
+            <field name="inherit_id" ref="base.view_company_form"/>
+            <field name="arch" type="xml">
+                <field name="currency_id" position="after">
+                    <field name="email_api_key"/>
+                    <field name="num_api_key"/>
+
+                </field>
+            </field>
+        </record>
+
+
+
+    <!-- Add action entry in the Action Menu for Partners -->
+    <record id="partner_form_send_sms_form_view_active" model="ir.ui.view">
+        <field name="name">res.partner.form.send.sms.active</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="priority">10</field>
+        <field name="arch" type="xml">
+
+            <field name="email" position="after">
+                <field name="email_verify_state" invisible="1"/>
+                <field name="phone_verify_state" invisible="1"/>
+            </field>
+
+            <xpath expr="//button[@name='toggle_active']" position="replace">
+                <button name="toggle_active" type="object" class="oe_stat_button" icon="fa-archive">
+                    <field name="active" widget="boolean_button" options="{'terminology':'archive'}"/>
+                </button>
+                <button
+                        type="object"
+                        name="verify_phone"
+                        class="oe_highlight fa fa-phone ml-5"
+                        style="color:black;background:white;font-weight:bold;text-align:center;"
+                        string="&#160;&#160;Verify Phone"
+                        attrs="{'invisible':['|',('phone', '=',False),('phone_verify_state','!=','draft')]}"
+                        context="{'field_name': 'phone'}"
+                />
+                <button
+                        type="action"
+                        name=""
+                        class="oe_highlight fa fa-check ml-5"
+                        style="color:#16a085;background:white;font-weight:bold;text-align:center;"
+                        string="&#160;&#160;Valid Phone"
+                        attrs="{'invisible':['|','|',('phone', '=',False),('phone_verify_state','=','invalid'),('phone_verify_state','=','draft')]}"
+                        context="{'field_name': 'phone'}"
+                />
+                <button
+                        type="action"
+                        name=""
+                        class="oe_highlight fa fa-times-circle"
+                        style="color:#e74c3c;background:white;font-weight:bold;text-align:center;"
+                        string="&#160;&#160;In-Valid Phone"
+                        attrs="{'invisible':['|','|',('phone', '=',False),('phone_verify_state','=','valid'),('phone_verify_state','=','draft')]}"
+                        context="{'field_name': 'phone'}"
+                />
+                <button
+                        type="object"
+                        name="verify_email"
+                        class="oe_highlight fa fa-envelope-open ml-5"
+                        style="color:black;background:white;font-weight:bold;text-align:center;"
+                        string="&#160;&#160;Verify Email"
+                        attrs="{'invisible':['|',('email', '=',False),('email_verify_state','!=','draft')]}"
+                        context="{'field_name': 'email'}"
+                />
+                <button
+                        type="action"
+                        name=""
+                        class="oe_highlight fa fa-check ml-5"
+                        style="color:#16a085;background:white;font-weight:bold;text-align:center;"
+                        string="&#160;&#160;Valid Email"
+                        attrs="{'invisible':['|','|',('email', '=',False),('email_verify_state','=','invalid'),('email_verify_state','=','draft')]}"
+                        context="{'field_name': 'email'}"
+                />
+                <button
+                        type="action"
+                        name=""
+                        class="oe_highlight fa fa-times-circle ml-5"
+                        style="color:#e74c3c;background:white;font-weight:bold;text-align:center;"
+                        string="&#160;&#160;In-Valid Email"
+                        attrs="{'invisible':['|','|',('email', '=',False),('email_verify_state','=','valid'),('email_verify_state','=','draft')]}"
+                        context="{'field_name': 'email'}"
+                />
+            </xpath>
+        </field>
+    </record>
+
+    </data>
+</odoo>
